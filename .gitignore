@@ -103,3 +103,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+
+
+# compiles protobuf files
+tests/proto3/*.py
