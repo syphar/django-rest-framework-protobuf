@@ -14,7 +14,7 @@ packages = [
 
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.6"
 protobuf = "^3.11.3"
 djangorestframework = "^3.11.0"
 

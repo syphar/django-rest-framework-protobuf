@@ -1,0 +1,56 @@
+name: tests
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8]
+        django-version: [
+            ">=2.2a1,<3.0",
+            ">=3.0a1,<3.1"
+        ]
+
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Cache pip downloads
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('poetry.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+          ${{ runner.os }}-
+    - name: install poetry
+      uses: dschep/install-poetry-action@v1.3
+    - name: install python dependencies
+      run: poetry install
+    - name: install django version from matrix
+      run: pip install "django${{matrix.django-version}}"
+
+    # linting
+    - name: run pydocstyle
+      run: pydocstyle
+    - name: run flake8
+      run: flake8
+    - name: run isort
+      run: isort --diff --check-only --recursive
+    - name: run bandit
+      run: bandit --ini .bandit -r .
+    - name: run black
+      run: black --check --diff .
+
+    # py.test and dependencies
+    - name: Install protoc
+      run: sudo apt install protobuf-compiler
+    - name: Compiling proto models for tests
+      run: invoke compile-test-proto
+    - name: run py.test
+      run: py.test
