@@ -22,7 +22,7 @@ djangorestframework = "^3.11.0"
 pytest = "^5.2"
 black = {version = "^19.10b0", allow-prereleases = true}
 pydocstyle = "^5.0.2"
-flake8 = "^3.7.9"
+flake8 = "^3.8.4"
 isort = "^4.3.21"
 bandit = "^1.6.2"
 pre-commit = "^2.0.1"
