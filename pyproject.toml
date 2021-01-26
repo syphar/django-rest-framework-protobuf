@@ -19,7 +19,7 @@ protobuf = "^3.11.3"
 djangorestframework = "^3.11.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "^6.2"
 black = {version = "^19.10b0", allow-prereleases = true}
 pydocstyle = "^5.0.2"
 flake8 = "^3.7.9"
